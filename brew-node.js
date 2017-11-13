@@ -14,30 +14,36 @@
 
 /*
 
-	- This app serves a page to each phone (and iPad)
-		- communicates to the device 
-			- what quote to display by number
-			- sound file to play back
-			- color to flash
-		- receives from the device
-			- occasional pings to know that it is still connected and can be controlled
-			- touches for which quote is displaying? 
-	- A controller (the image tracker) generates when and what to send to the various devices.
-		- alternatively, this app could do that control
-	- Sends data to an image tracker upon triggering
-		- Could be a web page hosted from here (or a communication portal hosted from here but loaded in max)
-		- hsl & quote number (perhaps this should all be done in Max and passed up to the server to be sent along to trigger. Yes.)
-	- image tracker passes on to a visualizer
-		- center x,y  (normalized)
-		- hsl  [0.-360., 0.-100.,0.-100.]
-		- quote #  [1-114]
-	- Visualizers
-		- Projection on people
-			- once tracked, it splashes the location of the person with color
-		- Wall 
-			- Projects quote, & possible splashes
+ This app serves a page to each phone (and iPad)
+	- communicates to the device 
+		- what quote to display by number
+		- sound file to play back
+		- color to flash
+	- receives from the device
+		- occasional pings to know that it is still connected and can be controlled
+		- touches for which quote is displaying? 
+- A controller (the image tracker) generates when and what to send to the various devices.
+	- alternatively, this app could do that control
+- Sends data to an image tracker upon triggering
+	- Could be a web page hosted from here (or a communication portal hosted from here but loaded in max)
+	- hsl & quote number (perhaps this should all be done in Max and passed up to the server to be sent along to trigger. Yes.)
+- image tracker passes on to a visualizer
+	- center x,y  (normalized)
+	- hsl  [0.-360., 0.-100.,0.-100.]
+	- quote #  [1-114]
+- Visualizers
+	- Projection on people
+		- once tracked, it splashes the location of the person with color
+	- Wall 
+		- Projects quote, & possible splashes
+		- When new quote is selected to distribute, it is sent to the wall
+	- Floor
+		- 'detectedDevice', {x: x, y: y, quoteNumber: quoteNumber, quotePhrase: quotePhrase, h: color[0], s: color[1], l: color[2]}
+		-
 
 */
+
+
 var _ = require('lodash');
 
 var maxActiveDelayTime = 15;		// 15 second delay time before thinking the user is disconnected
@@ -103,6 +109,7 @@ var ioClients = [];		// list of clients who have logged in.
 var currentSection = 0;		// current section.
 		// Specific clients who we only want one of.
 var vizID,
+		floorVizID,
 		conrollerID,
 		imageTrackerID;
 
@@ -125,6 +132,12 @@ io.sockets.on('connection', function (socket) {
 			vizID = socket.id;
 			console.log("Hello viz: " + vizID);
 		}
+		
+		if(username == "floorViz"){
+			floorVizID = socket.id;
+			console.log("Hello floorViz: " + floorVizID);
+		}
+		
 
 		if(username == "controller"){
 			controllerID = socket.id;
@@ -142,9 +155,9 @@ io.sockets.on('connection', function (socket) {
 
 		socket.username = username;  // allows the username to be retrieved anytime the socket is used
 		// Can add any other pertinent details to the socket to be retrieved later
-		socket.userLocation = userLocation;
-		socket.userColor = userColor;
-		socket.userNote = userNote;
+		// socket.userLocation = userLocation;
+		// socket.userColor = userColor;
+		// socket.userNote = userNote;
 		socket.userActive = userActive;
 		
 		console.log(socket.userActive.getTime());
@@ -164,15 +177,18 @@ io.sockets.on('connection', function (socket) {
 		if(username == "a_user") {
 			// oscClient.send('/causeway/registerUser', socket.id, socket.userColor, socket.userLocation[0],socket.userLocation[1], socket.userNote);
 			if(imageTrackerID) {
-					io.to(imageTrackerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
+					// io.to(imageTrackerID).emit('/causeway/registerUser', {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote}, 1);
 				// console.log("Added New User", {id: socket.id, color: socket.userColor, locationX: socket.userLocation[0], locationY: socket.userLocation[1], note: socket.userNote});
 	    }
 		}
 	});
 
+
+		// ***************  Utility Functions **************
+	
 	 socket.on('disconnect', function() {
 		// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
-		io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has left the building');
+		io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has retired');
 	 });
 
 
@@ -203,6 +219,7 @@ io.sockets.on('connection', function (socket) {
 			}
 		});
 		console.log("Current Users: " + _.size(userList) + userList);
+			// Return the user ID list as an array.
 		var userArray = _.toArray(userList);
 		console.log("Current UserArray: " + userArray.length + userArray);
 		// var noULDuplicates = _.uniqBy(userList, "id");
@@ -210,21 +227,26 @@ io.sockets.on('connection', function (socket) {
 		return userArray;
 	}
 	
+	
+	// ********** Client Devices - people's phones ********
+	
+			// Testing a Random Emission //
 	socket.on('testRandomEmitter', function(data) {
 		user = socket.id;
 		console.log('user: ' + user);
 		var color = [360., 100., 100.];
 		var quotePhrase = "Hey There Bob Howdy";
-		var quoteNum = "5";
+		var quoteNumber = "5";
 		
 		io.to(user).emit('triggerPhrase', {quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color}, 1);
 	});
 	
-			// Trigger a phrase on x simultaneous devices.
+	
+			// Trigger a phrase on x simultaneous devices. //
 	socket.on('triggerPhrase', function (data) {
 				// data.quoteNumber, .quotePhrase, .color, .simultaneousNumber
 				
-		var color = data.color;
+		var color = data.color;		// as hsl values
 		var quotePhrase = data.quotePhrase;
 		var quoteNumber = data.quoteNumber;
 
@@ -239,73 +261,32 @@ io.sockets.on('connection', function (socket) {
 				// var color = [360., 100., 100.];
 				// var quotePhrase = "Hey There Bob Howdy";
 				// var quoteNumber = "5";
-				console.log("Random User Selected: " + randomUser);
+				if(randomUser) {
+					console.log("Random User Selected: " + randomUser);
+					io.to(randomUser).emit('triggerPhrase', {quoteNumber: quoteNumber, quotePhrase: quotePhrase, h: color[0], s: color[1], l: color[2]}, 1);
+				}
 				
-				io.to(randomUser).emit('triggerPhrase', {quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color}, 1);
-
 						// Use this if you want to send back to the installation (may be used to help synchronize timing...)
 						// Also will notify of the user number that was triggered.
-				if(imageTrackerID) {
-					io.to(imageTrackerID).emit('triggerPhrase', {user: randomUser, quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color}, 1);
-						// console.log("Item", data);
-			  }
+				//if(imageTrackerID) {
+				//	io.to(imageTrackerID).emit('triggerPhrase', {user: randomUser, quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color}, 1);
+				//		// console.log("Item", data);
+			  //}
 			});
 		}
 	});
 	
 
+	// ********** Floor Projection ********
 
 
 
+		// io.to(randomUser).emit('detectedDevice', {x: x, y: y, quoteNumber: quoteNumber, quotePhrase: quotePhrase, h: color[0], s: color[1], l: color[2]}, 1);
 
 
-	 socket.on('sendchat', function(data) {
-		// Transmit to everyone who is connected //
-		io.sockets.emit('chat', socket.username, data);
-	 });
+	// ********** Wall Projection ********
 
-	socket.on('tap', function(data) {
-		// console.log("Data: ", data.inspect);
-		// oscClient.send('/tapped', 1);
-		socket.broadcast.emit('tapped', socket.username, 1);
-	});
 
-	socket.on('shareToggle', function(data) {
-		socket.broadcast.emit('setSharedToggle', data);
-	});
-
-	socket.on('location', function(data) {
-		if(data) {
-			// oscClient.send('/location', data[0], data[1]);
-		}
-	});
-
-	socket.on('item' , function(data) {
-		console.log(socket.id + " tapped item: " + data);
-		// TODO: Take out all the socket.broadcast.emits.
-		// socket.broadcast.emit('chat', socket.id + " : " + data, 1);
-
-		if(vizID) {
-			// io.to(vizID).emit('itemback', {phrase: data, color: socket.userColor}, 1);
-			io.sockets.emit('itemback', {phrase: data, color: socket.userColor}, 1);
-	   }
-		if(imageTrackerID) {
-			io.to(imageTrackerID).emit('/causeway/phrase/number', {id: socket.id, item: data}, 1);
-				// console.log("Item", data);
-	  }
-	});
-
-	socket.on('triggerCauseway', function(data) {
-		if(imageTrackerID) {
-				io.to(imageTrackerID).emit('/causeway/triggerCauseway', {id: socket.id}, 1);
-    }
-	});
-
-	socket.on('triggerPitch', function(data) {
-		if(imageTrackerID) {
-        io.to(imageTrackerID).emit('/causeway/triggerPitch', {id: socket.id}, 1);
-    }
-	});
 
 	socket.on('section', function(data) {
 		console.log("Section is now: "+ data);

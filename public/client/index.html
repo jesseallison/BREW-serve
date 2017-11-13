@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>client</title>
+  <script src="p5.min.js"></script>
+  <script src="sketch.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script>
+    var quoteNumber = 0;
+    var quotePhrase = 0;
+    var h = 0;
+    var s = 0;
+    var l = 25;
+    var x = 0;
+    var y = 0;
+    //var socket = io.connect('http://localhost:3000');
+		var socket = io.connect(window.location.origin, {
+			transports: ['websocket']
+		});
+
+		function registerWithServer() {
+			// Tone.startMobile();		// May need this back - check on devices.
+			// causeSound.triggerCauseway();
+			socket.emit('addme', {
+				name: "a_user"
+			});
+			// causeSound.triggerPitch();
+			//document.getElementsByClassName("sd")[0].style.display = 'none';
+			//document.getElementsByClassName("st")[0].style.display = 'block';
+		}
+
+		registerWithServer();
+
+		setInterval(function(){socket.emit('checkIn', "me");}, 15000);
+
+
+    socket.on('triggerPhrase', function (data) {
+      quotePhrase = data.quotePhrase;
+      quoteNumber = data.quoteNumber;
+      h = data.h;
+      s = data.s;
+      l = data.l;
+      x = data.x;
+      y = data.y;
+      console.log(data);
+      // socket.emit('my other event', { my: 'data' });
+    });
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>
