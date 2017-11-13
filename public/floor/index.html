@@ -20,7 +20,26 @@
     var l = 25;
     var x = 0;
     var y = 0;
-    var socket = io.connect('http://localhost:3000');
+
+		var socket = io.connect(window.location.origin, {
+			transports: ['websocket']
+		});
+
+		function registerWithServer() {
+			// Tone.startMobile();		// May need this back - check on devices.
+			// causeSound.triggerCauseway();
+			socket.emit('addme', {
+				name: "floorViz"
+			});
+			// causeSound.triggerPitch();
+			//document.getElementsByClassName("sd")[0].style.display = 'none';
+			//document.getElementsByClassName("st")[0].style.display = 'block';
+		}
+
+		registerWithServer();
+		//setInterval(function(){socket.emit('checkIn', "me");}, 15000);  // Used only on client to retain connectino. 
+
+
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;
       quoteNumber = data.quoteNumber;
