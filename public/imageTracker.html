@@ -1,0 +1,98 @@
+<html> 
+<head>
+	<meta charset="utf-8">
+	<title>BREW Installation</title>
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+	<link rel="stylesheet" href="/styles/main.css">
+
+	<link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<!-- <script type="text/javascript" src="js/Tone.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+
+<body>
+
+	<button onclick="socket.emit('triggerBeginning')">Beginning</button>
+	
+	<button onclick="socket.emit('testRandomEmitter')">Test Random Emit</button>
+
+
+<script>
+
+	var socket = io.connect(window.location.origin , {transports:['websocket']} );
+
+	var myColor = getRandomColor();
+	var myLocation = [0.5, 0.5];	// Default centered
+
+	socket.emit('addme', {name: "image_tracker", color: myColor, note: 60, location: myLocation});
+
+
+	socket.on('triggerPhrase', function(data) {
+		console.log('randomEmissionReceived: ', data)
+	});
+	
+
+	socket.on('setSection', function(data) {
+		console.log("The section is now: " + data.title);
+		window.max.outlet('section'+" "+ data.title);
+	});
+
+	socket.on('triggerBeginning', function(data) {
+		window.max.outlet('playKepler');
+	});
+
+	socket.on('/causeway/currentSection', function(data) {
+		window.max.outlet('/causeway/currentSection'+" "+ data.section+" "+ data.title);
+	});
+
+	socket.on('/causeway/triggerPitch', function(data) {
+		window.max.outlet('/causeway/triggerPitch'+" "+ data.id);
+	});
+
+	socket.on('/causeway/registerUser', function(data) {
+		window.max.outlet('/causeway/registerUser'+ " "+ data.id+" "+ data.color+" "+ data.locationX+" "+ data.locationY+" "+ data.note);
+	});
+
+
+
+
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF'.split('');
+		var color = '#';
+		for (var i = 0; i < 6; i++ ) {
+		    color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+
+	document.addEventListener('DOMContentLoaded', function() {
+		window.max.outlet('DOM ready');
+	});
+	
+	window.max.bindInlet('triggerPhrase', function(data) {
+		var args = [];
+		for(var key in arguments) {
+		    if(arguments.hasOwnProperty(key)) {
+		        args.push(arguments[key]);
+		    }
+		}
+		var color = [args[2], args[3], args[4]];
+		var quotePhrase = args[1];
+		var quoteNumber = args[0];
+		var simultaneousNumber = args[5];
+		
+		socket.emit("triggerPhrase",  {quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color, simultaneousNumber: simultaneousNumber});
+	});
+
+</script>
+
+</body>
+
+
+
+</html>
