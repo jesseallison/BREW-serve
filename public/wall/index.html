@@ -6,10 +6,14 @@
   <script src="p5.min.js"></script>
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
- <style>
+  <style>
     * {
       margin: 0;
       padding: 0;
+    }
+
+    body {
+      overflow: hidden;
     }
 
     @font-face {
@@ -35,21 +39,21 @@
     #quote {
       position: absolute;
       top: 7vw;
-      left: 5vw;
+      left: 8vw;
       right: 5vw;
       color: white;
-      font-size: 7.75vh;
+      font-size: 7vh;
       font-family: VAG-Rounded-Std-Thin;
       text-shadow: 1px 1px 2px black;
     }
 
     .ad {
       position: absolute;
-      left: 5vw;
+      left: 9vw;
       /* text-align: center; */
       bottom: 0;
       font-family: VAG-Rounded-Std-Thin;
-      font-size: 3.5vh;
+      font-size: 4vh;
       color: white;
       background-color: black;
       padding: 15px;
@@ -79,29 +83,9 @@
     var l = 25;
     var x = 0;
     var y = 0;
+    var mcount = 0;
+    var pmcount = -1;
     var socket = io.connect(window.location.origin);
-
-		function registerWithServer() {
-			// Tone.startMobile();		// May need this back - check on devices.
-			// causeSound.triggerCauseway();
-			socket.emit('addme', {
-				name: "viz"
-			});
-			// causeSound.triggerPitch();
-			//document.getElementsByClassName("sd")[0].style.display = 'none';
-			//document.getElementsByClassName("st")[0].style.display = 'block';
-		}
-
-		registerWithServer();
-		//setInterval(function(){socket.emit('checkIn', "me");}, 15000);  // Used only on client to retain connectino.
-		
-		socket.on('primaryQuote', function (data) {
-      quoteNumber = data.quoteNumber;
-
-      console.log(data);
-      // socket.emit('my other event', { my: 'data' });
-    });
-		
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;
       quoteNumber = data.quoteNumber;
@@ -110,11 +94,11 @@
       l = data.l;
       x = data.x;
       y = data.y;
+      mcount++;
       console.log(data);
       // socket.emit('my other event', { my: 'data' });
     });
   </script>
-
 </head>
 
 <body>
