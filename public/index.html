@@ -5,6 +5,7 @@
   <title>client</title>
   <script src="client/p5.min.js"></script>
   <script src="client/sketch.js"></script>
+	<script type="text/javascript" src="/js/Tone.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
 	<style>
     * {
@@ -84,7 +85,100 @@
       mcount++;
       console.log(data);
       // socket.emit('my other event', { my: 'data' });
+			brewSound.playSizzle();
     });
+
+
+	//   *****************   AUDIO!!!!     ******************
+	
+	
+			var brewSound = function() {
+
+				this.tone = new Tone();
+
+	 // 		this.plucky = new Tone.PluckSynth().toMaster();
+	 // 		this.plucky.volume.value = -10;
+	 //
+	 // 		this.seq = new Tone.Sequence(function(time, note) {
+	 // 			// console.log(note, time);
+	 // 			//subdivisions are given as subarrays
+	 // 			this.plucky.triggerAttackRelease(note, '8n');
+	 // 		}, ["C4", ["E4", "D4"], "E4", ["G4", "A4", "G4"]], '8n');
+
+	//			this.seq.loop = 4;
+	
+			this.audioFiles = [
+				"alien.mp3",
+				"clicks.mp3",
+				"electric_undertow.mp3",
+				"fizzle.mp3"
+			]
+
+			if(Math.floor(Math.random() * 2)){
+				this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/vwow-long.mp3").toMaster();
+				this.playerBGLoop.retrigger = true;
+				this.playerBGLoop.loop = true;
+				this.playerBGLoop.autostart = true;
+			} else {
+				this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
+				this.playerBGLoop.retrigger = true;
+				this.playerBGLoop.loop = true;
+				this.playerBGLoop.autostart = true;
+				
+			}
+
+				
+ // 			this.playerBGLoop2 = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
+ // 			this.playerBGLoop2.retrigger = true;
+ // 			this.playerBGLoop2.loop = true;
+ // 			this.playerBGLoop2.autostart = true;
+				
+
+				var sizzleSound = "/data/brew_sound/electricity/" + this.audioFiles[Math.floor(Math.random() * (this.audioFiles.length))];
+				this.playerSizzle = new Tone.Player(sizzleSound).toMaster();
+				this.playerSizzle.retrigger = true;
+
+
+				Tone.Transport.start();
+
+				this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
+
+				this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+				console.log("Pitch & Length: ", this.pitch, this.pitchCollection.length);
+
+				this.chords = [[55, 59, 62, 66, 68, 71, 75, 78, 82],
+												[57, 61, 64, 67, 69, 73, 76, 80, 83],
+												[55, 57, 61, 62, 66, 67],
+												[57, 59, 62, 64, 67, 68],
+												[83, 82, 78, 76, 73, 71],
+												[82, 80, 76, 75, 71, 69]];
+
+				this.currentChord = 0;
+
+				this.playLoop = function() {
+					this.playerBGLoop.start();
+				};
+
+				this.playSizzle = function() {
+					this.playerSizzle.start();
+				};
+
+				// ****  Events ****
+
+				this.playBBCollapse = function() {
+					this.playerBBCollapse.start();
+					var pitch = this.randomChordNote();
+					console.log("Pitch: ", pitch);
+					this.synth.triggerAttackRelease(this.freq(pitch), 5);
+				};
+
+
+
+			};
+
+			var brewSound = new brewSound();
+
+
   </script>
 
 </head>
