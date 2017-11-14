@@ -188,9 +188,9 @@ io.sockets.on('connection', function (socket) {
 	
 	
 				// TESTING - GENERATE FAKE triggerPhrase calls.
-//	  setInterval(function() { 
-//	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
-//	  }, 5000);
+	  setInterval(function() { 
+	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
+	  }, 3000);
 	
 	
 	 socket.on('disconnect', function() {

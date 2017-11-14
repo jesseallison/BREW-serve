@@ -37,7 +37,7 @@
       top: 7vw;
       left: 5vw;
       right: 5vw;
-      color: rgb(175, 175, 175);
+      color: rgb(190, 190, 190);
       font-size: 3vh;
       font-family: VAG-Rounded-Std-Thin;
       text-shadow: 1px 1px 2px black;
@@ -53,7 +53,7 @@
     var y = 0;
     var mcount = 0;
     var pmcount = -1;
-    var socket = io.connect(window.location.origin);
+    var socket = io.connect(window.location.host);
     socket.on('connect', function () {
       console.log(socket.id); // 'G5p5...'
     });
