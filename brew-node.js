@@ -202,13 +202,13 @@ io.sockets.on('connection', function (socket) {
 			// Constant contact Is the user still connected?  Update to new checkIn time
 	socket.on('checkIn', function (data) {
 		timeLapse = (Date.now() - socket.userActive.getTime())/1000. ;
-		console.log("Now: "+ Date.now() + " - last time: " + socket.userActive.getTime() + " = " + timeLapse + " Seconds");
+		// console.log("Now: "+ Date.now() + " - last time: " + socket.userActive.getTime() + " = " + timeLapse + " Seconds");
 		socket.userActive = new Date();
 	});
 	
 	isStillActive = function(lastActive) {
 		var timeLapse = (Date.now() - lastActive.getTime())/1000. ;
-		console.log(timeLapse + " Seconds");
+		// console.log(timeLapse + " Seconds");
 		if(timeLapse < maxActiveDelayTime) {
 			return 1;
 		} else {
@@ -220,7 +220,7 @@ io.sockets.on('connection', function (socket) {
 		var userList = _(io.sockets.connected).map(function(e) {
 			if(e.userActive) {
 				if(isStillActive(e.userActive)) {
-					console.log("active ID: " + e.id);
+					// console.log("active ID: " + e.id);
 			    return e.id;
 				}
 			}
