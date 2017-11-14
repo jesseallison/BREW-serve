@@ -20,11 +20,11 @@
     var l = 25;
     var x = 0;
     var y = 0;
+    var mcount = 0;
+    var pmcount = -1;
+    var socket = io.connect(window.location.origin);
 
-		var socket = io.connect(window.location.origin, {
-			transports: ['websocket']
-		});
-
+		
 		function registerWithServer() {
 			// Tone.startMobile();		// May need this back - check on devices.
 			// causeSound.triggerCauseway();
@@ -48,10 +48,12 @@
       l = data.l;
       x = data.x;
       y = data.y;
+      mcount++;
       console.log(data);
       // socket.emit('my other event', { my: 'data' });
     });
   </script>
+
 </head>
 
 <body>
