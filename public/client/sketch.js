@@ -41,7 +41,7 @@ function draw() {
   var nstr = quotes[quoteNumber].replace("—", "<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;—");
   document.getElementById("quote").innerHTML = nstr;
 
-  console.log(mcount, pmcount);
+  // console.log(mcount, pmcount);
 
   if (mcount != pmcount) {
     w++
