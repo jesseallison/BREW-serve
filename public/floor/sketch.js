@@ -20,7 +20,7 @@ function draw() {
   // background(h, s, l);
   background(0);
 
-  console.log(mcount, pmcount);
+  // console.log(mcount, pmcount);
   
   if (mcount != pmcount) {  
     is = 10; 

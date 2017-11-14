@@ -39,6 +39,19 @@
 		registerWithServer();
 		//setInterval(function(){socket.emit('checkIn', "me");}, 15000);  // Used only on client to retain connectino. 
 
+		socket.on('clientDetected', function(data) {
+      quotePhrase = data.quotePhrase;
+      // quoteNumber = data.quoteNumber;
+      h = data.h;
+      s = data.s;
+      l = data.l;
+      x = data.x;
+      y = data.y;
+      mcount++;
+      console.log(data);
+      // socket.emit('my other event', { my: 'data' });
+		});
+
 
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;

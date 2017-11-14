@@ -74,6 +74,13 @@
 		window.max.outlet('DOM ready');
 	});
 	
+	
+	window.max.bindInlet('primaryQuote', function(q) {
+		var quoteNumber = q;
+		
+		socket.emit("primaryQuote",  {quoteNumber: quoteNumber});
+	});
+	
 	window.max.bindInlet('triggerPhrase', function(data) {
 		var args = [];
 		for(var key in arguments) {
@@ -88,6 +95,27 @@
 		
 		socket.emit("triggerPhrase",  {quoteNumber: quoteNumber, quotePhrase: quotePhrase, color: color, simultaneousNumber: simultaneousNumber});
 	});
+	
+	window.max.bindInlet('clientDetected', function(data) {
+		var args = [];
+		for(var key in arguments) {
+		    if(arguments.hasOwnProperty(key)) {
+		        args.push(arguments[key]);
+		    }
+		}
+		var x = args[0];
+		var y = args[1];
+		var quoteNumber = args[2];
+		var h = args[3];
+		var s = args[4];
+		var l = args[5];
+
+// socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
+		
+		socket.emit("clientDetected",  {x: x, y:y, quoteNumber: quoteNumber, h:h, s:s, l:l});
+	});
+	
+	
 
 </script>
 

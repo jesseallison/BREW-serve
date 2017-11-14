@@ -187,10 +187,10 @@ io.sockets.on('connection', function (socket) {
 		// ***************  Utility Functions **************
 	
 	
-				// TESTING - GENERATE FACK triggerPhrase calls.
-	  setInterval(function() { 
-	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
-	  }, 5000);
+				// TESTING - GENERATE FAKE triggerPhrase calls.
+//	  setInterval(function() { 
+//	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
+//	  }, 5000);
 	
 	
 	 socket.on('disconnect', function() {
@@ -233,6 +233,8 @@ io.sockets.on('connection', function (socket) {
 		// console.log("Current noULDuplicates: " + _.size(noULDuplicates) + noULDuplicates);
 		return userArray;
 	}
+	
+
 	
 	
 	// ********** Client Devices - people's phones ********
@@ -288,10 +290,29 @@ io.sockets.on('connection', function (socket) {
 
 
 
+	socket.on('clientDetected', function(data) {
+		if(floorVizID) {
+				io.to(floorVizID).emit('clientDetected', data, 1);
+				console.log("clientDetected: ", data);
+				// socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
+	  }
+	});
+
+
 		// io.to(randomUser).emit('detectedDevice', {x: x, y: y, quoteNumber: quoteNumber, quotePhrase: quotePhrase, h: color[0], s: color[1], l: color[2]}, 1);
 
 
 	// ********** Wall Projection ********
+
+			// Pass along the current quote for reading.  This will change periodically, but not as often as triggerPhrase
+	socket.on('primaryQuote', function(data) {
+		if(vizID) {
+				io.to(vizID).emit('primaryQuote', data, 1);
+				// console.log("primaryQuote: ", data.quoteNumber);
+    }
+	});
+
+
 
 
 
