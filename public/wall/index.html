@@ -6,12 +6,71 @@
   <script src="p5.min.js"></script>
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <style>
+ <style>
     * {
       margin: 0;
       padding: 0;
     }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Light;
+      src: url(../data/VAG-Rounded-Std-Light.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Thin;
+      src: url(../data/VAG-Rounded-Std-Thin.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Black;
+      src: url(../data/VAG-Rounded-Std-Black.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Bold;
+      src: url(../data/VAG-Rounded-Std-Bold.ttf);
+    }
+
+    #quote {
+      position: absolute;
+      top: 7vw;
+      left: 5vw;
+      right: 5vw;
+      color: white;
+      font-size: 7.75vh;
+      font-family: VAG-Rounded-Std-Thin;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .ad {
+      position: absolute;
+      left: 5vw;
+      /* text-align: center; */
+      bottom: 0;
+      font-family: VAG-Rounded-Std-Thin;
+      font-size: 3.5vh;
+      color: white;
+      background-color: black;
+      padding: 15px;
+    }
+
+    .ad span {
+      font-family: VAG-Rounded-Std-Bold;
+      text-decoration: underline;
+    }
+
+    @keyframes blink {
+      50% {
+        text-shadow: 0 0 12px white;
+      }
+    }
+
+    .ad span {
+      animation: 4s infinite alternate blink;
+    }
   </style>
+
   <script>
     var quoteNumber = 0;
     var quotePhrase = 0;
@@ -20,10 +79,7 @@
     var l = 25;
     var x = 0;
     var y = 0;
-
-		var socket = io.connect(window.location.origin, {
-			transports: ['websocket']
-		});
+    var socket = io.connect(window.location.origin);
 
 		function registerWithServer() {
 			// Tone.startMobile();		// May need this back - check on devices.
@@ -38,7 +94,8 @@
 
 		registerWithServer();
 		//setInterval(function(){socket.emit('checkIn', "me");}, 15000);  // Used only on client to retain connectino.
-
+		
+		
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;
       quoteNumber = data.quoteNumber;
@@ -51,9 +108,16 @@
       // socket.emit('my other event', { my: 'data' });
     });
   </script>
+
 </head>
 
 <body>
+  <div class="ad">Visit
+    <span>http://emdm.io</span> to participate.
+  </div>
+  <div id="quote">
+    BREW
+  </div>
 </body>
 
 </html>
