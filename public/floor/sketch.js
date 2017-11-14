@@ -30,7 +30,7 @@ function draw() {
   } 
 
   if(mcount == pmcount){
-    is+=75;
+    is+=20;
   }
 
   // is = map(mouseX, 0, windowWidth, 0, 5000)
