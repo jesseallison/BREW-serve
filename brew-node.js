@@ -201,8 +201,10 @@ io.sockets.on('connection', function (socket) {
 
 			// Constant contact Is the user still connected?  Update to new checkIn time
 	socket.on('checkIn', function (data) {
-		timeLapse = (Date.now() - socket.userActive.getTime())/1000. ;
-		// console.log("Now: "+ Date.now() + " - last time: " + socket.userActive.getTime() + " = " + timeLapse + " Seconds");
+		if(socket.userActive){
+			timeLapse = (Date.now() - socket.userActive.getTime())/1000. ;
+			// console.log("Now: "+ Date.now() + " - last time: " + socket.userActive.getTime() + " = " + timeLapse + " Seconds");
+		}
 		socket.userActive = new Date();
 	});
 	
