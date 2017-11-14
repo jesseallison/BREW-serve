@@ -95,6 +95,7 @@
       console.log(data);
       // socket.emit('my other event', { my: 'data' });
 			brewSound.playSizzle();
+			brewSound.playPhrase(quoteNumber, quotePhrase)
     });
 
 
@@ -102,7 +103,7 @@
 	
 	
 			var brewSound = function() {
-
+				var self = this;
 				this.tone = new Tone();
 
 	 // 		this.plucky = new Tone.PluckSynth().toMaster();
@@ -133,9 +134,45 @@
 				this.playerBGLoop.retrigger = true;
 				this.playerBGLoop.loop = true;
 				this.playerBGLoop.autostart = true;
-				
 			}
+			this.playerBGLoop.volume.value = -6;
 
+			var quoteNumber = 10;
+			var wordPath = "/data/brew_sound/quote-phrases-mp3"
+			
+			var quotePhrases = {
+				1: 4,
+				2: 2,
+				3: 3,
+				4: 4,
+				5: 4,
+				6: 2,
+				7: 3,
+				8: 9,
+				9: 12,
+				10: 4
+			};
+			
+			this.playerPhraseSpeak = new Tone.Player("/data/brew_sound/electricity/electric-pops.mp3", function() {
+				// console.log("Loading: ");
+				self.playerPhraseSpeak.start();
+			}).toMaster();
+			this.playerPhraseSpeak.retrigger = true;
+			// this.playerPhraseSpeak.autostart = true;
+			
+			this.playPhrase = function(quote, phrase) {
+				//console.log("Play Phrase " + quote + " " + phrase);
+				if(phrase <= quoteNumber) {
+					var speakPhrase = "" + wordPath + "/"+ quote + "/Part " + phrase + ".mp3";
+					//console.log("loadPhraseFile: " + speakPhrase);
+					this.playerPhraseSpeak.load(speakPhrase, function() {
+						//console.log("Loaded: " + speakPhrase);
+						self.playerPhraseSpeak.start();
+					});
+					// this.playerPhraseSpeak.start();
+				}
+			};
+			
 				
  // 			this.playerBGLoop2 = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
  // 			this.playerBGLoop2.retrigger = true;

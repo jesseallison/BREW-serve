@@ -190,7 +190,7 @@ io.sockets.on('connection', function (socket) {
 				// TESTING - GENERATE FAKE triggerPhrase calls.
 	  setInterval(function() { 
 	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
-	  }, 3000);
+	  }, 8000);
 	
 	
 	 socket.on('disconnect', function() {
@@ -256,7 +256,7 @@ io.sockets.on('connection', function (socket) {
 			// Trigger a phrase on x simultaneous devices. //
 	socket.on('triggerPhrase', function (data) {
 				// data.quoteNumber, .quotePhrase, .color, .simultaneousNumber
-				
+			console.log("triggerPhrase " + data.quotePhrase );
 		var color = data.color;		// as hsl values
 		var quotePhrase = data.quotePhrase;
 		var quoteNumber = data.quoteNumber;
@@ -274,6 +274,7 @@ io.sockets.on('connection', function (socket) {
 				// var quoteNumber = "5";
 				if(randomUser) {
 					console.log("Random User Selected: " + randomUser);
+					//console.log("triggerPhrase " + quotePhrase );
 					io.to(randomUser).emit('triggerPhrase', {quoteNumber: quoteNumber, quotePhrase: quotePhrase, h: color[0], s: color[1], l: color[2]}, 1);
 				}
 				
