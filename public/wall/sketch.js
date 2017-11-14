@@ -32,7 +32,7 @@ function draw() {
   // console.log(quotes[quoteNumber])
   
   n = n + 0.1;
-  translate(width, 0);
+  translate(width/1.25, 0);
   rotate(radians(n));
   image(compass, 0, 0, windowHeight*1.5, windowHeight*1.5);
 
