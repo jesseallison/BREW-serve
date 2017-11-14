@@ -4,7 +4,7 @@
   "description": "Nexus hub for distributed performance.",
   "main": "nexusCluster.js",
   "scripts": {
-    "start": "node nexusCluster.js"
+    "start": "node brew-node.js"
   },
   "repository": {
     "type": "git",
