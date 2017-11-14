@@ -186,6 +186,13 @@ io.sockets.on('connection', function (socket) {
 
 		// ***************  Utility Functions **************
 	
+	
+				// TESTING - GENERATE FACK triggerPhrase calls.
+	  setInterval(function() { 
+	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
+	  }, 5000);
+	
+	
 	 socket.on('disconnect', function() {
 		// ioClients.remove(socket.id);	// FIXME: Remove client if they leave
 		io.sockets.emit('chat', 'SERVER: ' + socket.id + ' has retired');
@@ -363,6 +370,14 @@ io.sockets.on('connection', function (socket) {
 	};
 
 });
+
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 
 function getRandomColor() {
 	var letters = '0123456789ABCDEF'.split('');

@@ -6,10 +6,41 @@
   <script src="p5.min.js"></script>
   <script src="sketch.js"></script>
   <script src="/socket.io/socket.io.js"></script>
-  <style>
+	<style>
     * {
       margin: 0;
       padding: 0;
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Light;
+      src: url(../data/VAG-Rounded-Std-Light.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Thin;
+      src: url(../data/VAG-Rounded-Std-Thin.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Black;
+      src: url(../data/VAG-Rounded-Std-Black.ttf);
+    }
+
+    @font-face {
+      font-family: VAG-Rounded-Std-Bold;
+      src: url(../data/VAG-Rounded-Std-Bold.ttf);
+    }
+
+    #quote {
+      position: absolute;
+      top: 7vw;
+      left: 5vw;
+      right: 5vw;
+      color: rgb(175, 175, 175);
+      font-size: 3vh;
+      font-family: VAG-Rounded-Std-Thin;
+      text-shadow: 1px 1px 2px black;
     }
   </style>
   <script>
@@ -20,10 +51,12 @@
     var l = 25;
     var x = 0;
     var y = 0;
-    //var socket = io.connect('http://localhost:3000');
-		var socket = io.connect(window.location.origin, {
-			transports: ['websocket']
-		});
+    var mcount = 0;
+    var pmcount = -1;
+    var socket = io.connect(window.location.origin);
+    socket.on('connect', function () {
+      console.log(socket.id); // 'G5p5...'
+    });
 
 		function registerWithServer() {
 			// Tone.startMobile();		// May need this back - check on devices.
@@ -39,8 +72,7 @@
 		registerWithServer();
 
 		setInterval(function(){socket.emit('checkIn', "me");}, 15000);
-
-
+		
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;
       quoteNumber = data.quoteNumber;
@@ -49,13 +81,18 @@
       l = data.l;
       x = data.x;
       y = data.y;
+      mcount++;
       console.log(data);
       // socket.emit('my other event', { my: 'data' });
     });
   </script>
+
 </head>
 
 <body>
+	<div id="quote">
+    BREW
+  </div>
 </body>
 
 </html>
