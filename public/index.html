@@ -136,6 +136,13 @@
 				this.playerBGLoop.autostart = true;
 			}
 			this.playerBGLoop.volume.value = -6;
+			
+			
+	  	this.playerBGLoop2 = new Tone.Player("/data/brew_sound/mbira_em.mp3").toMaster();
+	 		this.playerBGLoop2.retrigger = true;
+	 		this.playerBGLoop2.loop = true;
+	 		this.playerBGLoop2.autostart = true;
+			
 
 			var quoteNumber = 10;
 			var wordPath = "/data/brew_sound/quote-phrases-mp3"
@@ -173,11 +180,6 @@
 				}
 			};
 			
-				
- // 			this.playerBGLoop2 = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
- // 			this.playerBGLoop2.retrigger = true;
- // 			this.playerBGLoop2.loop = true;
- // 			this.playerBGLoop2.autostart = true;
 				
 
 				var sizzleSound = "/data/brew_sound/electricity/" + this.audioFiles[Math.floor(Math.random() * (this.audioFiles.length))];
