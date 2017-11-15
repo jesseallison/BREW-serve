@@ -87,6 +87,24 @@
     var mcount = 0;
     var pmcount = -1;
     var socket = io.connect(window.location.origin);
+
+		function registerWithServer() {
+			socket.emit('addme', {
+				name: "viz"
+			});
+		}
+
+		registerWithServer();
+		//setInterval(function(){socket.emit('checkIn', "me");}, 15000);  // Used only on client to retain connectino. 
+
+		
+		socket.on('primaryQuote', function(data) {
+      quoteNumber = data.quoteNumber;
+      console.log(data);
+      // socket.emit('my other event', { my: 'data' });
+		});
+
+
     socket.on('triggerPhrase', function (data) {
       quotePhrase = data.quotePhrase;
       quoteNumber = data.quoteNumber;

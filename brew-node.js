@@ -48,6 +48,11 @@ var _ = require('lodash');
 
 var maxActiveDelayTime = 15;		// 15 second delay time before thinking the user is disconnected
 
+	// Testing Variables [set to 0 to disable, otherwise, set in ms]
+var testTriggerPhraseDuration = 15000;
+var testClientDetectedDuration = 20000;
+var testPrimaryQuoteDuration = 18000;
+
 var colorPalette = [
 	[0., 0., 0.],
 	[1., 1., 1.]
@@ -115,6 +120,42 @@ var vizID,
 
 // *********************
 
+
+
+// TESTING - GENERATE FAKE calls. *********
+	console.log("Testing Setup");
+
+	if(testTriggerPhraseDuration) {
+		setInterval(function() { 
+	    io.sockets.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)});
+			console.log("Testing triggerPhrase");
+	  }, testTriggerPhraseDuration);
+	console.log("Testing triggerPhraseDuration: ", testTriggerPhraseDuration);
+	}
+
+	if(testPrimaryQuoteDuration) {
+		console.log("Testing testPrimaryQuoteDuration: ", testPrimaryQuoteDuration);
+		setInterval(function() { 
+			if(vizID) {
+					data = {quoteNumber: getRandomInt(0, 113)};
+					io.to(vizID).emit("primaryQuote",  data, 1);
+					console.log("Testing primaryQuote: ", data.quoteNumber);
+	    } 
+	  }, testPrimaryQuoteDuration);
+	}
+	
+	if(testClientDetectedDuration) {
+		console.log("Testing testClientDetectedDuration: ", testClientDetectedDuration);
+		setInterval(function() { 
+	    if(floorVizID) {
+				data = {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}
+					io.to(floorVizID).emit('clientDetected', data, 1);
+					//console.log("Testing clientDetected: ", data);
+		  }
+	  }, testTriggerPhraseDuration);
+	}
+	
+// END TESTING - *************************
 
 
 	// Respond to web sockets with socket.on
@@ -185,12 +226,6 @@ io.sockets.on('connection', function (socket) {
 
 
 		// ***************  Utility Functions **************
-	
-	
-				// TESTING - GENERATE FAKE triggerPhrase calls.
-	  setInterval(function() { 
-	    socket.emit('triggerPhrase', {x:getRandomInt(0, 1024), y:getRandomInt(0, 768), quoteNumber:getRandomInt(0, 113), h:getRandomInt(0, 360), s:getRandomInt(0, 100), l:getRandomInt(0, 100)}) 
-	  }, 8000);
 	
 	
 	 socket.on('disconnect', function() {
