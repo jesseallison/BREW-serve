@@ -2,239 +2,241 @@
 <html>
 
 <head>
-  <title>client</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  
-  
-  <script src="client/p5.min.js"></script>
-  <script src="client/sketch.js"></script>
-	<script type="text/javascript" src="/js/Tone.min.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-	<style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: black;
-      overflow: hidden;
-    }
-
-    @font-face {
-      font-family: VAG-Rounded-Std-Light;
-      src: url(data/VAG-Rounded-Std-Light.ttf);
-    }
-
-    @font-face {
-      font-family: VAG-Rounded-Std-Thin;
-      src: url(data/VAG-Rounded-Std-Thin.ttf);
-    }
-
-    @font-face {
-      font-family: VAG-Rounded-Std-Black;
-      src: url(data/VAG-Rounded-Std-Black.ttf);
-    }
-
-    @font-face {
-      font-family: VAG-Rounded-Std-Bold;
-      src: url(data/VAG-Rounded-Std-Bold.ttf);
-    }
-
-    #quote {
-      position: absolute;
-      top: 7vw;
-      left: 5vw;
-      right: 5vw;
-      color: rgb(190, 190, 190);
-      font-size: 3.5vh;
-      font-family: VAG-Rounded-Std-Thin;
-      text-shadow: 1px 1px 2px black;
-    }
-  </style>
-  <script>
-    var quoteNumber = 0;
-    var quotePhrase = 0;
-    var h = 0;
-    var s = 0;
-    var l = 25;
-    var x = 0;
-    var y = 0;
-    var mcount = 0;
-    var pmcount = -1;
-    var socket = io.connect(window.location.host);
-    socket.on('connect', function () {
-      console.log(socket.id); // 'G5p5...'
-    });
-
-		function registerWithServer() {
-			// Tone.startMobile();		// May need this back - check on devices.
-			// causeSound.triggerCauseway();
-			socket.emit('addme', {
-				name: "a_user"
-			});
-			// causeSound.triggerPitch();
-			//document.getElementsByClassName("sd")[0].style.display = 'none';
-			//document.getElementsByClassName("st")[0].style.display = 'block';
-		}
-
-		registerWithServer();
-
-		setInterval(function(){socket.emit('checkIn', "me");}, 15000);
-		
-    socket.on('triggerPhrase', function (data) {
-      quotePhrase = data.quotePhrase;
-      quoteNumber = data.quoteNumber;
-      h = data.h;
-      s = data.s;
-      l = data.l;
-      x = data.x;
-      y = data.y;
-      mcount++;
-      console.log(data);
-      // socket.emit('my other event', { my: 'data' });
-			brewSound.playSizzle();
-			brewSound.playPhrase(quoteNumber, quotePhrase)
-    });
+    <title>client</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 
-	//   *****************   AUDIO!!!!     ******************
-	
-	
-			var brewSound = function() {
-				var self = this;
-				this.tone = new Tone();
+    <script src="client/p5.min.js"></script>
+    <script src="client/sketch.js"></script>
+    <script type="text/javascript" src="/js/Tone.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: black;
+            overflow: hidden;
+        }
+        
+        @font-face {
+            font-family: VAG-Rounded-Std-Light;
+            src: url(data/VAG-Rounded-Std-Light.ttf);
+        }
+        
+        @font-face {
+            font-family: VAG-Rounded-Std-Thin;
+            src: url(data/VAG-Rounded-Std-Thin.ttf);
+        }
+        
+        @font-face {
+            font-family: VAG-Rounded-Std-Black;
+            src: url(data/VAG-Rounded-Std-Black.ttf);
+        }
+        
+        @font-face {
+            font-family: VAG-Rounded-Std-Bold;
+            src: url(data/VAG-Rounded-Std-Bold.ttf);
+        }
+        
+        #quote {
+            position: absolute;
+            top: 7vw;
+            left: 5vw;
+            right: 5vw;
+            color: rgb(190, 190, 190);
+            font-size: 3.5vh;
+            font-family: VAG-Rounded-Std-Thin;
+            text-shadow: 1px 1px 2px black;
+        }
+    </style>
+    <script>
+        var quoteNumber = 0;
+        var quotePhrase = 0;
+        var h = 0;
+        var s = 0;
+        var l = 25;
+        var x = 0;
+        var y = 0;
+        var mcount = 0;
+        var pmcount = -1;
+        var socket = io.connect(window.location.host);
+        socket.on('connect', function() {
+            console.log(socket.id); // 'G5p5...'
+        });
 
-	 // 		this.plucky = new Tone.PluckSynth().toMaster();
-	 // 		this.plucky.volume.value = -10;
-	 //
-	 // 		this.seq = new Tone.Sequence(function(time, note) {
-	 // 			// console.log(note, time);
-	 // 			//subdivisions are given as subarrays
-	 // 			this.plucky.triggerAttackRelease(note, '8n');
-	 // 		}, ["C4", ["E4", "D4"], "E4", ["G4", "A4", "G4"]], '8n');
+        function registerWithServer() {
+            // Tone.startMobile();		// May need this back - check on devices.
+            // causeSound.triggerCauseway();
+            socket.emit('addme', {
+                name: "a_user"
+            });
+            // causeSound.triggerPitch();
+            //document.getElementsByClassName("sd")[0].style.display = 'none';
+            //document.getElementsByClassName("st")[0].style.display = 'block';
+        }
 
-	//			this.seq.loop = 4;
-	
-			this.audioFiles = [
-				"alien.mp3",
-				"clicks.mp3",
-				"electric_undertow.mp3",
-				"fizzle.mp3"
-			]
+        registerWithServer();
 
-			if(Math.floor(Math.random() * 2)){
-				this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/vwow-long.mp3").toMaster();
-				this.playerBGLoop.retrigger = true;
-				this.playerBGLoop.loop = true;
-				this.playerBGLoop.autostart = true;
-			} else {
-				this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
-				this.playerBGLoop.retrigger = true;
-				this.playerBGLoop.loop = true;
-				this.playerBGLoop.autostart = true;
-			}
-			this.playerBGLoop.volume.value = -6;
-			
-			
-	  	this.playerBGLoop2 = new Tone.Player("/data/brew_sound/mbira_em.mp3").toMaster();
-	 		this.playerBGLoop2.retrigger = true;
-	 		this.playerBGLoop2.loop = true;
-	 		this.playerBGLoop2.autostart = true;
-			
+        setInterval(function() {
+            socket.emit('checkIn', "me");
+        }, 15000);
 
-			var quoteNumber = 10;
-			var wordPath = "/data/brew_sound/quote-phrases-mp3"
-			
-			var quotePhrases = {
-				1: 4,
-				2: 2,
-				3: 3,
-				4: 4,
-				5: 4,
-				6: 2,
-				7: 3,
-				8: 9,
-				9: 12,
-				10: 4
-			};
-			
-			this.playerPhraseSpeak = new Tone.Player("/data/brew_sound/electricity/electric-pops.mp3", function() {
-				// console.log("Loading: ");
-				self.playerPhraseSpeak.start();
-			}).toMaster();
-			this.playerPhraseSpeak.retrigger = true;
-			// this.playerPhraseSpeak.autostart = true;
-			
-			this.playPhrase = function(quote, phrase) {
-				//console.log("Play Phrase " + quote + " " + phrase);
-				if(phrase <= quoteNumber) {
-					var speakPhrase = "" + wordPath + "/"+ quote + "/Part " + phrase + ".mp3";
-					//console.log("loadPhraseFile: " + speakPhrase);
-					this.playerPhraseSpeak.load(speakPhrase, function() {
-						//console.log("Loaded: " + speakPhrase);
-						self.playerPhraseSpeak.start();
-					});
-					// this.playerPhraseSpeak.start();
-				}
-			};
-			
-				
-
-				var sizzleSound = "/data/brew_sound/electricity/" + this.audioFiles[Math.floor(Math.random() * (this.audioFiles.length))];
-				this.playerSizzle = new Tone.Player(sizzleSound).toMaster();
-				this.playerSizzle.retrigger = true;
+        socket.on('triggerPhrase', function(data) {
+            quotePhrase = data.quotePhrase;
+            quoteNumber = data.quoteNumber;
+            h = data.h;
+            s = data.s;
+            l = data.l;
+            x = data.x;
+            y = data.y;
+            mcount++;
+            console.log(data);
+            // socket.emit('my other event', { my: 'data' });
+            brewSound.playSizzle();
+            brewSound.playPhrase(quoteNumber, quotePhrase)
+        });
 
 
-				Tone.Transport.start();
+        //   *****************   AUDIO!!!!     ******************
 
-				this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
 
-				this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
-				console.log("Pitch & Length: ", this.pitch, this.pitchCollection.length);
+        var brewSound = function() {
+            var self = this;
+            this.tone = new Tone();
 
-				this.chords = [[55, 59, 62, 66, 68, 71, 75, 78, 82],
-												[57, 61, 64, 67, 69, 73, 76, 80, 83],
-												[55, 57, 61, 62, 66, 67],
-												[57, 59, 62, 64, 67, 68],
-												[83, 82, 78, 76, 73, 71],
-												[82, 80, 76, 75, 71, 69]];
+            // 		this.plucky = new Tone.PluckSynth().toMaster();
+            // 		this.plucky.volume.value = -10;
+            //
+            // 		this.seq = new Tone.Sequence(function(time, note) {
+            // 			// console.log(note, time);
+            // 			//subdivisions are given as subarrays
+            // 			this.plucky.triggerAttackRelease(note, '8n');
+            // 		}, ["C4", ["E4", "D4"], "E4", ["G4", "A4", "G4"]], '8n');
 
-				this.currentChord = 0;
+            //			this.seq.loop = 4;
 
-				this.playLoop = function() {
-					this.playerBGLoop.start();
-				};
+            this.audioFiles = [
+                "alien.mp3",
+                "clicks.mp3",
+                "electric_undertow.mp3",
+                "fizzle.mp3"
+            ]
 
-				this.playSizzle = function() {
-					this.playerSizzle.start();
-				};
+            if (Math.floor(Math.random() * 2)) {
+                this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/vwow-long.mp3").toMaster();
+                this.playerBGLoop.retrigger = true;
+                this.playerBGLoop.loop = true;
+                this.playerBGLoop.autostart = true;
+            } else {
+                this.playerBGLoop = new Tone.Player("/data/brew_sound/electricity/sizzle-long.mp3").toMaster();
+                this.playerBGLoop.retrigger = true;
+                this.playerBGLoop.loop = true;
+                this.playerBGLoop.autostart = true;
+            }
+            this.playerBGLoop.volume.value = -6;
 
-				// ****  Events ****
 
-				this.playBBCollapse = function() {
-					this.playerBBCollapse.start();
-					var pitch = this.randomChordNote();
-					console.log("Pitch: ", pitch);
-					this.synth.triggerAttackRelease(this.freq(pitch), 5);
-				};
+            this.playerBGLoop2 = new Tone.Player("/data/brew_sound/mbira_em.mp3").toMaster();
+            this.playerBGLoop2.retrigger = true;
+            this.playerBGLoop2.loop = true;
+            this.playerBGLoop2.autostart = true;
+
+
+            var quoteNumber = 10;
+            var wordPath = "/data/brew_sound/quote-phrases-mp3"
+
+            var quotePhrases = {
+                1: 4,
+                2: 2,
+                3: 3,
+                4: 4,
+                5: 4,
+                6: 2,
+                7: 3,
+                8: 9,
+                9: 12,
+                10: 4
+            };
+
+            this.playerPhraseSpeak = new Tone.Player("/data/brew_sound/electricity/electric-pops.mp3", function() {
+                // console.log("Loading: ");
+                self.playerPhraseSpeak.start();
+            }).toMaster();
+            this.playerPhraseSpeak.retrigger = true;
+            // this.playerPhraseSpeak.autostart = true;
+
+            this.playPhrase = function(quote, phrase) {
+                //console.log("Play Phrase " + quote + " " + phrase);
+                if (phrase <= quoteNumber) {
+                    var speakPhrase = "" + wordPath + "/" + quote + "/Part " + phrase + ".mp3";
+                    //console.log("loadPhraseFile: " + speakPhrase);
+                    this.playerPhraseSpeak.load(speakPhrase, function() {
+                        //console.log("Loaded: " + speakPhrase);
+                        self.playerPhraseSpeak.start();
+                    });
+                    // this.playerPhraseSpeak.start();
+                }
+            };
 
 
 
-			};
+            var sizzleSound = "/data/brew_sound/electricity/" + this.audioFiles[Math.floor(Math.random() * (this.audioFiles.length))];
+            this.playerSizzle = new Tone.Player(sizzleSound).toMaster();
+            this.playerSizzle.retrigger = true;
 
-			var brewSound = new brewSound();
+
+            Tone.Transport.start();
+
+            this.pitchCollection = [55, 57, 59, 61, 62, 64, 66, 67, 68, 69, 71, 73, 75, 76, 78, 80, 82, 83];
+
+            this.pitch = this.pitchCollection[Math.floor(Math.random() * (this.pitchCollection.length))];
+            console.log("Pitch & Length: ", this.pitch, this.pitchCollection.length);
+
+            this.chords = [
+                [55, 59, 62, 66, 68, 71, 75, 78, 82],
+                [57, 61, 64, 67, 69, 73, 76, 80, 83],
+                [55, 57, 61, 62, 66, 67],
+                [57, 59, 62, 64, 67, 68],
+                [83, 82, 78, 76, 73, 71],
+                [82, 80, 76, 75, 71, 69]
+            ];
+
+            this.currentChord = 0;
+
+            this.playLoop = function() {
+                this.playerBGLoop.start();
+            };
+
+            this.playSizzle = function() {
+                this.playerSizzle.start();
+            };
+
+            // ****  Events ****
+
+            this.playBBCollapse = function() {
+                this.playerBBCollapse.start();
+                var pitch = this.randomChordNote();
+                console.log("Pitch: ", pitch);
+                this.synth.triggerAttackRelease(this.freq(pitch), 5);
+            };
 
 
-  </script>
+
+        };
+
+        var brewSound = new brewSound();
+    </script>
 
 </head>
 
 <body>
-	<div id="quote">
-    BREW
-  </div>
+    <div id="quote">
+        BREW
+    </div>
 </body>
 
 </html>
