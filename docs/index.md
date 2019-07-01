@@ -3,16 +3,16 @@
 Jesse Allison & Derick Ostrenko
 
 
-![BREW Entryway](/images/BREW-Entry.jpg)
+![BREW Entry](/images/BREW-Entry.jpg width="800")
 ![BREW-EntryWall](/images/BREW-EntryWall.jpg "Entry Wall projection at BREW 2017")
-![BREW-Images](/images/BREW-EntryWay.jpg )
-![BREW-Images](/images/BREW-InnovationQuotes.jpg )
-![BREW-Images](/images/BREW-InnovationWall.jpg )
-[BREW-Images](/images/BREW-InnovationWall.MOV )
-![BREW-Images](/images/BREW-Interactive.jpg )
-![BREW-Images](/images/BREW-Overhead.jpg )
-![BREW-Images](/images/BREW-Overhead2.jpg )
-![BREW-Images](/images/BREW-Quotes.jpg )
-![BREW-Images](/images/BREW-Tabletquotes.jpg )
-[BREW-Images](/images/BREW-Tablets.mov)
+![BREW-EntryWay](/images/BREW-EntryWay.jpg )
+![BREW-InnovationQuotes](/images/BREW-InnovationQuotes.jpg )
+![BREW-InnovationWall](/images/BREW-InnovationWall.jpg )
+[BREW-InnovationWall](/images/BREW-InnovationWall.MOV )
+![BREW-Interactive](/images/BREW-Interactive.jpg )
+![BREW-Overhead](/images/BREW-Overhead.jpg )
+![BREW-Overhead2](/images/BREW-Overhead2.jpg )
+![BREW-Quotes](/images/BREW-Quotes.jpg )
+![BREW-TabletQuotes](/images/BREW-Tabletquotes.jpg )
+[BREW-Tablets](/images/BREW-Tablets.mov)
 
