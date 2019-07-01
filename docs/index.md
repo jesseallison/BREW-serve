@@ -3,7 +3,7 @@
 Jesse Allison & Derick Ostrenko
 
 
-![BREW Entry](/images/BREW-Entry.jpg width="800")
+![BREW Entry](/images/BREW-Entry.jpg)
 ![BREW-EntryWall](/images/BREW-EntryWall.jpg "Entry Wall projection at BREW 2017")
 ![BREW-EntryWay](/images/BREW-EntryWay.jpg )
 ![BREW-InnovationQuotes](/images/BREW-InnovationQuotes.jpg )
