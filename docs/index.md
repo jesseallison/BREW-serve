@@ -13,7 +13,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 
 ----
 
-![BREW Entry](/images/BREW-Entry.jpg)
+![BREW Entry](images/BREW-Entry.jpg)
 
 > Learning and innovation go hand in hand. The arrogance of success is to think that what you did yesterday will be sufficient for tomorrow. – _William Pollard_
 
