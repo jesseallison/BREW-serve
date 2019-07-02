@@ -30,7 +30,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Once you have an innovation culture, even those who are not scientists or engineers - poets, actors, journalists - they, as communities, embrace the meaning of what it is to be scientifically literate. They embrace the concept of an innovation culture. They vote in ways that promote it. They don't fight science and they don't fight technology. – _Neil deGrasse Tyson_
 
 
-![BREW-EntryWall](/images/BREW-EntryWall.jpg "Entry Wall projection at BREW 2017")
+![BREW-EntryWall](images/BREW-EntryWall.jpg "Entry Wall projection at BREW 2017")
 
 ---
 
@@ -54,7 +54,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 
 
 
-![BREW-EntryWay](/images/BREW-EntryWay.jpg )
+![BREW-EntryWay](images/BREW-EntryWay.jpg )
 
 ---
 
@@ -75,7 +75,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Ideas are like rabbits. You get a couple and learn how to handle them, and pretty soon you have a dozen. – _John Steinbeck_
 
 
-![BREW-InnovationQuotes](/images/BREW-InnovationQuotes.jpg )
+![BREW-InnovationQuotes](images/BREW-InnovationQuotes.jpg )
 
 ---
 
@@ -96,7 +96,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Nothing will change the fact that I cannot produce the least thing without absolute solitude. – _Goethe_
 
 
-![BREW-InnovationWall](/images/BREW-InnovationWall.jpg )
+![BREW-InnovationWall](images/BREW-InnovationWall.jpg )
 
 ---
 
@@ -113,7 +113,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Whatever you can do, or dream you can, begin it. Boldness has genius, power and magic in it. – _Goethe_
 
 
-![BREW-Interactive](/images/BREW-Interactive.jpg )
+![BREW-Interactive](images/BREW-Interactive.jpg )
 
 ---
 
@@ -133,7 +133,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Remember, a dead fish can float down a stream, but it takes a live one to swim upstream. – _W.C. Fields_
 
 
-![BREW-Overhead](/images/BREW-Overhead.jpg )
+![BREW-Overhead](images/BREW-Overhead.jpg )
 
 ---
 
@@ -155,7 +155,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > The greatest invention in the world is the mind of a child. – _Thomas Edison_
 
 
-![BREW-Overhead2](/images/BREW-Overhead2.jpg )
+![BREW-Overhead2](images/BREW-Overhead2.jpg )
 
 ---
 
@@ -175,7 +175,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > Without a deadline, baby, I wouldn't do nothing. – _Duke Ellington_
 
 
-![BREW-Quotes](/images/BREW-Quotes.jpg )
+![BREW-Quotes](images/BREW-Quotes.jpg )
 
 ---
 
@@ -205,7 +205,7 @@ In 2017 the opening event to BREW incorporated an interactive projection and mob
 > You will never find the time for anything. If you want time, you must make it. – _Charles Burton_
 
 
-![BREW-TabletQuotes](/images/BREW-Tabletquotes.jpg )
+![BREW-TabletQuotes](images/BREW-Tabletquotes.jpg )
 
 ---
 
